@@ -21,6 +21,10 @@ const NotesSchema = new Schema({
     date:{
         type: String,
         default : Date.now
+    },
+    updatedDate:{
+        type: String,
+        default : Date.now
     }
 });
 
