@@ -4,7 +4,8 @@ const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const JWT_SECRET = require('../keys').JWT_SECRET;
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser');
 
 // ROUTE1 - create user using POST : /api/auth/
 router.post('/createuser', [
@@ -108,6 +109,25 @@ router.post('/login', [
         });
     }
 
+});
+
+// ROUTE3 - Get loggedin user details using POST "/app/auth/getuser" [Login required]
+router.post('/getuser', fetchuser, async (req, res) => {
+    try {
+        userId = req.user.id;//get from token
+        const user = await User.findById(userId).select("-password");
+        if(!user){
+            return res.status(400).json({ error : "Please try to login with correct credentials" });
+        };
+        res.send({user});
+
+    }catch(err) {
+        console.error("err = ", err);
+        res.status(500).send({
+                "msg" : "Some error occured"
+               // "error" : error.message
+        });
+    }
 });
 
 
