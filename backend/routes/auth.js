@@ -67,7 +67,7 @@ router.post('/createuser', [
     }
 });
 
-// ROUTE2 - Authenticate a user using POST "/app/auth/login"
+// ROUTE2 - Authenticate a user using POST "/api/auth/login"
 router.post('/login', [
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password cannot be blank').exists()
@@ -111,7 +111,7 @@ router.post('/login', [
 
 });
 
-// ROUTE3 - Get loggedin user details using POST "/app/auth/getuser" [Login required]
+// ROUTE3 - Get loggedin user details using POST "/api/auth/getuser" [Login required]
 router.post('/getuser', fetchuser, async (req, res) => {
     try {
         userId = req.user.id;//get from token
