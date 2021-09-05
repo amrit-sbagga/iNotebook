@@ -65,13 +65,13 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         let note = await Notes.findById(req.params.id);
         if(!note){
             console.log("not found..!!");
-            res.status(404).send("Not Found.");
+            return res.status(404).send("Not Found.");
         }
 
         //only loggedin user can update his/her note
         if(note.user.toString() !== req.user.id){
             console.log("diff user not allowed..!!");
-            res.status(401).send("Not Allowed.")
+            return res.status(401).send("Not Allowed.")
         }
 
         note = await Notes.findByIdAndUpdate(req.params.id, 
@@ -86,5 +86,34 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         });
     }
 });
+
+// ROUTE4 - Delete an existing Note using DELETE "/api/notes/deletenote" [Login required]
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+    try { 
+        //find the note to be deleted(if exists) & delete it
+        let note = await Notes.findById(req.params.id);
+        if(!note){
+            console.log("not found for delete..!!");
+            return res.status(404).send("Not Found.");
+        }
+
+        //only loggedin user can delete his/her note
+        if(note.user.toString() !== req.user.id){
+            console.log("diff user not allowed..!!");
+            return res.status(401).send("Not Allowed.")
+        }
+
+        note = await Notes.findByIdAndDelete(req.params.id);
+        res.json({"msg" : "Success! Note has been deleted.", note});
+
+    }catch(err) {
+        console.error("err = ", err);
+        res.status(500).send({
+                "msg":"Some error occured"
+                //"error": error.message
+        });
+    }
+});
+
 
 module.exports = router;
