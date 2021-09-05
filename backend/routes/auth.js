@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const JWT_SECRET = require('../keys').JWT_SECRET;
 const jwt = require('jsonwebtoken')
 
-//create user using POST : /api/auth/
+// ROUTE1 - create user using POST : /api/auth/
 router.post('/createuser', [
     body('name', 'Enter a valid name').isLength({ min:3 }),
     body('email', 'Enter a valid email').isEmail(),
@@ -60,10 +60,54 @@ router.post('/createuser', [
     }catch(err) {
         console.error("err = ", err);
         res.status(500).send({
-                "msg":"Some error occured",
-                "error": error.message
+                "msg":"Some error occured"
+                //"error": error.message
         });
     }
+});
+
+// ROUTE2 - Authenticate a user using POST "/app/auth/login"
+router.post('/login', [
+    body('email', 'Enter a valid email').isEmail(),
+    body('password', 'Password cannot be blank').exists()
+], async (req, res) => {
+    try {
+        //I there are errors, return bad request and the errors
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            console.log(errors.array());
+            return res.status(400).json({errors : errors.array() });
+        }
+
+        const { email, password } = req.body;
+        let user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({ error : "Please try to login with correct credentials" });
+        }
+
+        const pwdCompare = await bcrypt.compare(password, user.password);
+        //console.log("pwdCompare = ", pwdCompare);
+        if(!pwdCompare){
+            return res.status(400).json({ error : "Please try to login with correct credentials" });
+        }
+
+        const data = {
+            user : {
+                id : user._id
+            }
+        }
+        const authToken = jwt.sign(data, JWT_SECRET);
+        console.log("login jwtData = ", authToken);
+        res.send({authToken});
+
+    }catch(err) {
+        console.error("err = ", err);
+        res.status(500).send({
+                "msg" : "Some error occured"
+               // "error" : error.message
+        });
+    }
+
 });
 
 
