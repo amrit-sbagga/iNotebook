@@ -8,7 +8,7 @@ const fetchuser = require('../middleware/fetchuser');
 router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
         const notes = await Notes.find({user : req.user.id});
-        console.log("notes = ", notes);
+        //console.log("notes = ", notes);
         res.json({notes});
     }catch(err) {
         console.error("err = ", err);
