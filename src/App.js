@@ -1,11 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import About from './components/About';
 
 function App() {
   return (
-    <div className="App">
-      <h1>This is iNoteBook</h1>
-    </div>
+    <>
+      <Router>
+        <Navbar title="iNoteBook" aboutText="About iNoteBook"/>
+          <Switch>
+          <Route exact path="/">
+              <Home/>
+            </Route>
+            <Route exact path="/about">
+              <About/>
+            </Route>
+          </Switch>
+        </Router>
+    </>
   );
 }
 
