@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 
 const Navbar = (props) => {
+    let location = useLocation();
+    useEffect(() => {
+        console.log(location.pathname);
+    }, [location]);
     return (
         <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -14,10 +18,10 @@ const Navbar = (props) => {
          <div className="collapse navbar-collapse" id="navbarSupportedContent">
              <ul className="navbar-nav mr-auto">
              <li className="nav-item active">
-                 <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+                 <Link className={`nav-link ${location.pathname==="/"? "active": ""}`} to="/">Home <span className="sr-only">(current)</span></Link>
              </li>
              <li className="nav-item">
-                 <Link className="nav-link" to="/about">{props.aboutText}</Link>
+                 <Link className={`nav-link ${location.pathname==="/about"? "active": ""}`} to="/about">{props.aboutText}</Link>
              </li>
              </ul>
              <form className="form-inline my-2 my-lg-0">

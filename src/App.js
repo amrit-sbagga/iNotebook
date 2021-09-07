@@ -15,16 +15,18 @@ function App() {
     <NoteState>
       <Router>
         <Navbar title="iNoteBook" aboutText="About iNoteBook"/>
+        <div className="container">
           <Switch>
-          <Route exact path="/">
-              <Home/>
-            </Route>
-            <Route exact path="/about">
-              <About/>
-            </Route>
-          </Switch>
-        </Router>
-      </NoteState>
+            <Route exact path="/">
+                <Home/>
+              </Route>
+              <Route exact path="/about">
+                <About/>
+              </Route>
+           </Switch>
+        </div>
+      </Router>
+    </NoteState>
     </>
   );
 }
