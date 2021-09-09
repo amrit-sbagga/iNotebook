@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const NoteItem = (props) => {
+const NoteItem = (props) => {
     const {note} = props;
     const {title, description} = note;
     return (
@@ -19,3 +19,5 @@ export const NoteItem = (props) => {
         </div>  
     )
 }
+
+export default NoteItem;
