@@ -5,10 +5,28 @@ const NoteState = (props) => {
 
     const notesInitial = [
         {
-            "title":"note1"
+            "title":"note1",
+            "description":"note1 desc"
         },
         {
-            "title":"note2"
+            "title":"note2",
+            "description":"note1 desc"
+        },
+        {
+            "title":"note3",
+            "description":"note3 desc"
+        },
+        {
+            "title":"note4",
+            "description":"note4 desc"
+        },
+        {
+            "title":"note5",
+            "description":"note5 desc"
+        },
+        {
+            "title":"note6",
+            "description":"note6 desc"
         }
    ];
 
