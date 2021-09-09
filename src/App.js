@@ -7,6 +7,7 @@ import {
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import About from './components/About';
+import { Alert } from './components/Alert';
 import NoteState from './context/notes/NoteState';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <NoteState>
       <Router>
         <Navbar title="iNoteBook" aboutText="About iNoteBook"/>
+        <Alert message="This is amzing"/>
         <div className="container">
           <Switch>
             <Route exact path="/">
