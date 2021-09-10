@@ -2,7 +2,7 @@ import NoteContext from './noteContext';
 import { useState } from 'react';
 
 const NoteState = (props) => {
-
+    const host = "http://localhost:5000"
     const notesInitial = [
         {
             "_id":"1",
@@ -38,10 +38,27 @@ const NoteState = (props) => {
 
     const [notes, setNotes] = useState(notesInitial);
 
+    async function postData(url = '', data = {}){
+        const response = await fetch(url, {
+            method : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+                'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzNGQwOTQyZmY0ZGQxMDU5ODQ4NTA4In0sImlhdCI6MTYzMDg1MjkyNX0.q4y1fxhHdiafUbEJ1FM-oyj62CLc2VgYioxwoRYazHM"
+            },
+            body : JSON.stringify(data)
+        });
+        return response.json();
+    }
+
     //Add a Note
-    const addNote = (title, description, tag) => {
-        //TODO : API call
+    const addNote = async (title, description, tag) => {
         console.log("Adding a new note..");
+        const url = `${host}/api/notes/addnote`;
+        postData(url, {title, description, tag})
+            .then(data => {
+                console.log(data);
+            });
+        
         let note = {
             title,
             description,
@@ -62,7 +79,23 @@ const NoteState = (props) => {
     }
 
     //Edit a Note
-    const editNote = (id) => {
+    const editNote = async (id, title, description, tag) => {
+        //API Call
+        const url = `${host}/api/notes/updatenote/${id}`
+        postData(url, {title, description, tag})
+            .then(data => {
+                console.log(data);
+            });
+
+        for (let index = 0; index < notes.length; index++) {
+            const element = array[index];
+            if(element._id === id){
+                element.title = title;
+                element.description = description;
+                element.tag = tag;
+            }
+            
+        }
         
     }
     
