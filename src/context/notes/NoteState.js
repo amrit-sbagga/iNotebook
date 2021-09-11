@@ -51,16 +51,15 @@ const NoteState = (props) => {
         const url = `${host}/api/notes/addnote`;
         makeRestCall(url, {title, description, tag}, 'POST')
             .then(data => {
-                console.log(data);
+                console.log("add note response = ", data);
+                let note = {
+                    title,
+                    description,
+                    tag,
+                    _id : data.savedNote._id
+                }
+                setNotes(notes.concat(note))
             });
-        
-        // let note = {
-        //     title,
-        //     description,
-        //     tag : tag,
-        //     "_id":tag+"1"
-        // }
-        // setNotes(notes.concat(note))
     }
 
     //Delete a Note

@@ -14,10 +14,11 @@ export const Notes = () => {
 
     return (
         <>
-         <AddNote/>
+        <AddNote/>
         <h2>Your Notes</h2>
         <div className="row my-3">
             {notes.map((note)=>{
+                console.log("note id = ", note._id);
                 return <NoteItem key={note._id} note={note}/>
             })}
         </div>
