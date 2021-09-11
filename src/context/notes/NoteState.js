@@ -52,13 +52,15 @@ const NoteState = (props) => {
         makeRestCall(url, {title, description, tag}, 'POST')
             .then(data => {
                 console.log("add note response = ", data);
-                let note = {
-                    title,
-                    description,
-                    tag,
-                    _id : data.savedNote._id
-                }
-                setNotes(notes.concat(note))
+                if(data.savedNote){
+                    let note = {
+                        title,
+                        description,
+                        tag,
+                        _id : data.savedNote._id
+                    }
+                    setNotes(notes.concat(note))
+                }        
             });
     }
 
