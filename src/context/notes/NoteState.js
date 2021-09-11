@@ -70,7 +70,12 @@ const NoteState = (props) => {
         const url = `${host}/api/notes/deletenote/${id}`
         makeRestCall(url, {}, 'DELETE')
             .then(data => {
-                console.log(data);
+                console.log("delete response = ", data);
+
+                let newNotes = notes.filter((note) => {
+                    return note._id !== id;
+                });
+                setNotes(newNotes);
             });
 
         // let newNotes = notes.filter((note) => {
