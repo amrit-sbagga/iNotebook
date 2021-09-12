@@ -62,29 +62,33 @@ export const Notes = () => {
                                 <div className="form-group">
                                     <label htmlFor="title">Title</label>
                                     <input type="text" className="form-control" id="etitle" name="etitle" 
-                                    placeholder="title" onChange={onChange} value={note.etitle}/>
+                                    placeholder="title" onChange={onChange} value={note.etitle} required minLength={3}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="description">Description</label>
                                     <input type="text" className="form-control" id="edescription" name="edescription"
-                                    placeholder="description" onChange={onChange} value={note.edescription}/>
+                                    placeholder="description" onChange={onChange} value={note.edescription} required minLength={5}/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="tag">Tag</label>
                                     <input type="text" className="form-control" id="etag" name="etag" placeholder="tag" 
-                                    onChange={onChange} value={note.etag}/>
+                                    onChange={onChange} value={note.etag} required/>
                                 </div>
                             </form>  
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" ref={refClose}>Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+                            <button type="button" className="btn btn-primary" onClick={handleClick}
+                                disabled={note.etitle.length < 3 || note.edescription.length < 5}>Update Note</button>
                         </div>
                     </div>
                 </div>
             </div>
             <h2>Your Notes</h2>
             <div className="row my-3">
+                <div className="container my-3 mx-2">
+                    {notes.length === 0 && 'No notes to display'}
+                </div>
                 {notes.map((note) => {
                    // console.log("note id = ", note._id);
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} />

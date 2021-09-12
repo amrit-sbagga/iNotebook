@@ -15,7 +15,8 @@ const NoteState = (props) => {
                 'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzNGQwOTQyZmY0ZGQxMDU5ODQ4NTA4In0sImlhdCI6MTYzMDg1MjkyNX0.q4y1fxhHdiafUbEJ1FM-oyj62CLc2VgYioxwoRYazHM"
             }
         });
-        return response.json();
+        const resp = response.json()
+        return resp;
     }
 
     async function makeRestCall(url = '', data = {}, method){
@@ -93,7 +94,6 @@ const NoteState = (props) => {
         makeRestCall(url, {title, description, tag}, 'PUT')
             .then(data => {
                 console.log("editnote response data = ", data);
-                console.log("data note length = ", data.note.length);
                 if(data.note){
                     //copy
                     let newNotes = JSON.parse(JSON.stringify(notes));
