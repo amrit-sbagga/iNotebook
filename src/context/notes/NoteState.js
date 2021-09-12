@@ -27,7 +27,8 @@ const NoteState = (props) => {
             },
             body : JSON.stringify(data)
         });
-        return response.json();
+        const resp = await response.json()
+        return resp;
     }
 
     //Get all Notes
@@ -91,18 +92,27 @@ const NoteState = (props) => {
         const url = `${host}/api/notes/updatenote/${id}`
         makeRestCall(url, {title, description, tag}, 'PUT')
             .then(data => {
-                console.log(data);
-            });
+                console.log("editnote response data = ", data);
+                console.log("data note length = ", data.note.length);
+                if(data.note){
+                    //copy
+                    let newNotes = JSON.parse(JSON.stringify(notes));
 
-        // for (let index = 0; index < notes.length; index++) {
-        //     const element = array[index];
-        //     if(element._id === id){
-        //         element.title = title;
-        //         element.description = description;
-        //         element.tag = tag;
-        //     }      
-        // }
-        
+                    for (let index = 0; index < newNotes.length; index++) {
+                        const element = newNotes[index];
+                        //console.log("element = ", element);
+                        if(element._id === id){
+                            newNotes[index].title = title;
+                            newNotes[index].description = description;
+                            newNotes[index].tag = tag;
+                            //console.log("notes here1-", newNotes[index]); 
+                            break;
+                        }  
+                        //console.log("notes here-", notes); 
+                    }
+                    setNotes(newNotes);
+                }
+            });
     }
     
     return (

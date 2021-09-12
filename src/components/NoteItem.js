@@ -6,7 +6,7 @@ const NoteItem = (props) => {
     const { title, description } = note;
 
     const context = useContext(noteContext);
-    const { editNote, deleteNote } = context;
+    const { deleteNote } = context;
     return (
         <div className="col-md-3 my-3 mx-3">
             <div className="card" style={{"width": "18rem"}}>
