@@ -3,6 +3,9 @@ import AuthContext from './authContext';
 import { useState } from 'react'; 
 
 const AuthState = (props) => {
+    const host = "http://localhost:5000";
+
+    const [token, setToken] = useState({"token":""})
 
     async function makeRestCall(url = '', data = {}, method){
         const response = await fetch(url, {
@@ -18,10 +21,21 @@ const AuthState = (props) => {
 
     const doLogin = async (un, pwd) => {
         console.log("do login..!!", un, pwd);
+        const url = `${host}/api/auth/login`;
+        makeRestCall(url, {email:un, password:pwd}, 'POST')
+            .then(data => {
+                console.log("login response = ", data);  
+                if(data.authToken){
+                    //TODO - backend api change
+                    //for success flag - true/false
+                    setToken({token : data.authToken});
+                }     
+            });
     }
 
     const doSignup = async (un, pwd) => {
         console.log("do signup..!!");
+        
     }
 
     return (

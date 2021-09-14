@@ -45,7 +45,7 @@ export const Notes = () => {
             <AddNote />
 
             <button type="button" ref={ref} className="btn btn-primary d-none" data-toggle="modal" data-target="#editModalCenter">
-            Launch demo modal
+            Launch modal
             </button>
 
             <div className="modal fade" id="editModalCenter" tabIndex="-1" role="dialog" aria-labelledby="editModalCenterTitle" aria-hidden="true">

@@ -26,8 +26,8 @@ const Navbar = (props) => {
              </ul>
              <form className="d-flex">
              {/* <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/> */}
-                <button className="btn btn-primary" role="button" href="#">Login</button>
-                <button className="btn btn-primary mx-2" role="button" href="#">Signup</button>
+                <Link className="btn btn-primary" role="button" to="/login">Login</Link>
+                <Link className="btn btn-primary mx-2" role="button" to="/signup">Signup</Link>
              </form>
          </div>
         </nav>            
