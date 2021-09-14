@@ -83,13 +83,13 @@ router.post('/login', [
         const { email, password } = req.body;
         let user = await User.findOne({email});
         if(!user){
-            return res.status(400).json({ error : "Please try to login with correct credentials" });
+            return res.status(400).json({ "success" : false, error : "Please try to login with correct credentials" });
         }
 
         const pwdCompare = await bcrypt.compare(password, user.password);
         //console.log("pwdCompare = ", pwdCompare);
         if(!pwdCompare){
-            return res.status(400).json({ error : "Please try to login with correct credentials" });
+            return res.status(400).json({ "success" : false, error : "Please try to login with correct credentials" });
         }
 
         const data = {
@@ -99,7 +99,7 @@ router.post('/login', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
         console.log("login jwtData = ", authToken);
-        res.send({authToken});
+        res.send({"success" : true, authToken});
 
     }catch(err) {
         console.error("err = ", err);
