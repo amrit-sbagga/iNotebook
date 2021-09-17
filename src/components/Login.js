@@ -45,14 +45,13 @@ const Login = () => {
                     <label htmlFor="email">Email address</label>
                     <input type="email" className="form-control" id="email" name="email"
                          aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={creds.email} />
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" name="password"
                          placeholder="Password" onChange={onChange} value={creds.password}/>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     )
