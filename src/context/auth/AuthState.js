@@ -42,9 +42,9 @@ const AuthState = (props) => {
            
     }
 
-    const doSignup = async (un, pwd) => {
+    const doSignup = async (name, un, pwd) => {
         console.log("do signup..!!");
-        
+        //TODO
     }
 
     return (

@@ -22,10 +22,6 @@ const Login = () => {
         console.log("handle submit...!!");
         await doLogin(creds.email, creds.password);
         console.log("authRes after login =>", authRes);
-        
-        //for making form empty after submit
-        //ref.current.clear()
-        setCreds(initialState);
 
         if(authRes.success){
             //redirect
@@ -35,6 +31,10 @@ const Login = () => {
             //alert - wrong creds
             alert("Invalid credentials.")
         }
+
+         //for making form empty after submit
+        //ref.current.clear()
+        //setCreds(initialState);
         
     }
 
