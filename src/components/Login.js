@@ -1,9 +1,12 @@
 import React, { useContext, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import authContext from '../context/auth/authContext';
 
 const Login = () => {
     const context = useContext(authContext);
-    const { doLogin } = context;
+    const { authRes, doLogin } = context;
+
+    let history = useHistory();
 
     const ref = useRef(null);
 
@@ -14,13 +17,25 @@ const Login = () => {
         setCreds({...creds, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("handle submit...!!");
-        doLogin(creds.email, creds.password);
+        await doLogin(creds.email, creds.password);
+        console.log("authRes after login =>", authRes);
+        
         //for making form empty after submit
         //ref.current.clear()
         setCreds(initialState);
+
+        if(authRes.success){
+            //redirect
+            localStorage.setItem('token', authRes.token);
+            history.push("/");
+        } else{
+            //alert - wrong creds
+            alert("Invalid credentials.")
+        }
+        
     }
 
     return (
