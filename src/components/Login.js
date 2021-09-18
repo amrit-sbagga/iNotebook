@@ -26,8 +26,9 @@ const Login = (props) => {
         if(authRes.success){
             //redirect
             localStorage.setItem('token', authRes.authToken);
-            history.push("/");
+            
             props.showAlert("Logged-in successfully", "success");
+            history.push("/");
         } else{
             //alert - wrong creds
             //alert("Invalid credentials.")
@@ -41,14 +42,15 @@ const Login = (props) => {
     }
 
     return (
-        <div>
+        <div className="mt-2">
+            <h2>Login to iNotebook</h2>
             <form onSubmit={handleSubmit} ref={ref}>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <label htmlFor="email">Email address</label>
                     <input type="email" className="form-control" id="email" name="email"
                          aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={creds.email} />
                 </div>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" name="password"
                          placeholder="Password" onChange={onChange} value={creds.password}/>

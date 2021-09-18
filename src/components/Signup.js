@@ -29,8 +29,8 @@ const Signup = (props) => {
             if(authRes.success && authRes.success !== ""){
                 //redirect
                 localStorage.setItem('token', authRes.authToken);
-                history.push("/");
                 props.showAlert("Account created successfully", "success");
+                history.push("/");
             } else{
                 //alert - wrong creds
                 //alert("Invalid credentials.")
@@ -52,24 +52,25 @@ const Signup = (props) => {
     }
 
     return (
-        <div>
+        <div className="mt-2">
+            <h2>Create an account to use iNotebook</h2>
             <form onSubmit={handleSubmit} ref={ref}>
-            <div className="form-group">
+            <div className="form-group my-3">
                     <label htmlFor="name">Name</label>
                     <input type="text" className="form-control" id="name" name="name"
                          placeholder="Name" onChange={onChange} value={register.name} required minLength={3}/>
                 </div>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <label htmlFor="email">Email address</label>
                     <input type="email" className="form-control" id="email" name="email"
                          aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={register.email} required />
                 </div>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" name="password"
                          placeholder="Password" onChange={onChange} value={register.password} required minLength={5}/>
                 </div>
-                <div className="form-group">
+                <div className="form-group my-3">
                     <label htmlFor="cpassword">Confirm Password</label>
                     <input type="password" className="form-control" id="cpassword" name="cpassword"
                          placeholder="Confirm Password" onChange={onChange} value={register.cpassword} required minLength={5}/>

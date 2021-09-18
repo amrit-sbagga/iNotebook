@@ -1,4 +1,3 @@
-import reactDom from 'react-dom';
 import AuthContext from './authContext';
 import { useState } from 'react'; 
 
