@@ -23,8 +23,28 @@ const Signup = () => {
 
         // first check if password & confirm pwd are same
 
-        await doSignup(register.name, register.email, register.password);
-        console.log("authRes after signup =>", authRes);
+        if(register.password === register.cpassword){
+            await doSignup(register.name, register.email, register.password);
+            console.log("authRes after signup =>", authRes);
+            if(authRes.success && authRes.success !== ""){
+                //redirect
+                localStorage.setItem('token', authRes.authToken);
+                history.push("/");
+            } else{
+                //alert - wrong creds
+                //alert("Invalid credentials.")
+                //get error from authRes.error
+                if(authRes.errors && authRes.errors.length > 0){
+                    alert(authRes.errors[0].msg);
+                }else if(authRes.error){
+                    alert(authRes.error);
+                } else {
+                    console.log("Some error occured.");
+                }   
+            }
+        }else{
+            console.log("passwords doesn't match.");
+        }    
 
     }
 
@@ -34,22 +54,22 @@ const Signup = () => {
             <div className="form-group">
                     <label htmlFor="name">Name</label>
                     <input type="text" className="form-control" id="name" name="name"
-                         placeholder="Name" onChange={onChange} value={register.name}/>
+                         placeholder="Name" onChange={onChange} value={register.name} required minLength={3}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
                     <input type="email" className="form-control" id="email" name="email"
-                         aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={register.email} />
+                         aria-describedby="emailHelp" placeholder="Enter email" onChange={onChange} value={register.email} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" name="password"
-                         placeholder="Password" onChange={onChange} value={register.password}/>
+                         placeholder="Password" onChange={onChange} value={register.password} required minLength={5}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="cpassword">Confirm Password</label>
                     <input type="password" className="form-control" id="cpassword" name="cpassword"
-                         placeholder="Confirm Password" onChange={onChange} value={register.cpassword}/>
+                         placeholder="Confirm Password" onChange={onChange} value={register.cpassword} required minLength={5}/>
                 </div>
                 <button type="submit" className="btn btn-primary">Signup</button>
             </form>
