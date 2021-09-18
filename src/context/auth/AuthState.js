@@ -5,7 +5,8 @@ import { useState } from 'react';
 const AuthState = (props) => {
     const host = "http://localhost:5000";
 
-    const [authRes, setAuthRes] = useState({"success" : "", "token" : "", "error" : ""})
+    let initialData = {"success" : "", "token" : "", "error" : ""}
+    const [authRes, setAuthRes] = useState(initialData)
 
     async function makeRestCall(url = '', data = {}, method){
         const response = await fetch(url, {
@@ -20,6 +21,7 @@ const AuthState = (props) => {
     }
 
     const doLogin = async (un, pwd) => {
+        //setAuthRes(initialData);
         console.log("do login..!!", un, pwd);
         const url = `${host}/api/auth/login`;
         let resp = await makeRestCall(url, {email:un, password:pwd}, 'POST');
@@ -43,8 +45,19 @@ const AuthState = (props) => {
     }
 
     const doSignup = async (name, un, pwd) => {
-        console.log("do signup..!!");
-        //TODO
+        //setAuthRes(initialData);
+        console.log("do login..!!", name, un, pwd);
+        const url = `${host}/api/auth/createuser`;
+        let resp = await makeRestCall(url, {name:name, email:un, password:pwd}, 'POST');
+        console.log("signup response = ", resp);  
+        
+        if(resp.success){
+            resp["error"] = "";
+            setAuthRes(resp);
+        } else{
+            resp["token"] = "";
+            setAuthRes(resp);
+        }
     }
 
     return (
