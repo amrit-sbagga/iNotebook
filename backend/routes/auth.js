@@ -13,12 +13,14 @@ router.post('/createuser', [
     body('email', 'Enter a valid email').isEmail(),
     body('password', 'Password must be atleast 5 characters').isLength({ min:5 })
 ], async (req, res) => {
+    let success = false;
     try {
         //I there are errors, return bad request and the errors
         const errors = validationResult(req);
+        
         if(!errors.isEmpty()){
             console.log(errors.array());
-            return res.status(400).json({errors : errors.array() });
+            return res.status(400).json({success, errors : errors.array() });
         }
         //console.log("body = ", req.body);
         //const user = User(req.body);
@@ -33,7 +35,7 @@ router.post('/createuser', [
         if(user){
             console.log("user email already exists..!!");
             return res.status(400)
-                    .json({"error": "Sorry a user with this email already exists."});
+                    .json({success, "error": "Sorry a user with this email already exists."});
         }
         user = await User.create({
             name : req.body.name,
@@ -56,7 +58,8 @@ router.post('/createuser', [
         }
         const authToken = jwt.sign(data, JWT_SECRET);
         console.log("jwtData = ", authToken);
-        res.send({authToken});
+        success = true
+        res.send({success, authToken});
     
     }catch(err) {
         console.error("err = ", err);
