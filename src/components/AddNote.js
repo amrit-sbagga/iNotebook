@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import noteContext from "../context/notes/noteContext";
 import { Notes } from './Notes';
 
-const AddNote = () => {
+const AddNote = (props) => {
     const context = useContext(noteContext);
     const {addNote} = context;
 
@@ -17,6 +17,7 @@ const AddNote = () => {
         addNote(note.title, note.description, note.tag);
         //for making form empty after save
         setNote({title:"", description:"", tag:""})
+        props.showAlert("Note added successfully.", "success");
     }
 
     return (    

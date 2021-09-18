@@ -3,7 +3,7 @@ import noteContext from "../context/notes/noteContext";
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 
-export const Notes = () => {
+export const Notes = (props) => {
     const context = useContext(noteContext);
     const { notes, getNotes, editNote } = context;
     const [note, setNote] = useState({id : "", etitle:"", edescription:"", etag:""})
@@ -31,18 +31,19 @@ export const Notes = () => {
         setNote({...note, [e.target.name]: e.target.value})
     }
 
-    const handleClick = (e) => {
+    const handleEditClick = (e) => {
         e.preventDefault();
         console.log("updating the note..!!", note);
         //addNote(note.title, note.description, note.tag);
         editNote(note.id, note.etitle, note.edescription, note.etag);
+        props.showAlert("Note updated successfully.", "success");
 
         refClose.current.click()
     }
 
     return (
         <>
-            <AddNote />
+            <AddNote showAlert={props.showAlert}/>
 
             <button type="button" ref={ref} className="btn btn-primary d-none" data-toggle="modal" data-target="#editModalCenter">
             Launch modal
@@ -78,7 +79,7 @@ export const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" ref={refClose}>Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}
+                            <button type="button" className="btn btn-primary" onClick={handleEditClick}
                                 disabled={note.etitle.length < 3 || note.edescription.length < 5}>Update Note</button>
                         </div>
                     </div>
@@ -91,7 +92,7 @@ export const Notes = () => {
                 </div>
                 {notes.map((note) => {
                    // console.log("note id = ", note._id);
-                    return <NoteItem key={note._id} updateNote={updateNote} note={note} />
+                    return <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
                 })}
             </div>
         </>

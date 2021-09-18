@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import authContext from '../context/auth/authContext';
 
-const Login = () => {
+const Login = (props) => {
     const context = useContext(authContext);
     const { authRes, doLogin } = context;
 
@@ -27,9 +27,11 @@ const Login = () => {
             //redirect
             localStorage.setItem('token', authRes.authToken);
             history.push("/");
+            props.showAlert("Logged-in successfully", "success");
         } else{
             //alert - wrong creds
-            alert("Invalid credentials.")
+            //alert("Invalid credentials.")
+            props.showAlert("Invalid details", "danger");
         }
 
          //for making form empty after submit

@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import authContext from '../context/auth/authContext';
 
-const Signup = () => {
+const Signup = (props) => {
 
     const context = useContext(authContext);
     const { authRes, doSignup } = context;
@@ -30,14 +30,17 @@ const Signup = () => {
                 //redirect
                 localStorage.setItem('token', authRes.authToken);
                 history.push("/");
+                props.showAlert("Account created successfully", "success");
             } else{
                 //alert - wrong creds
                 //alert("Invalid credentials.")
                 //get error from authRes.error
                 if(authRes.errors && authRes.errors.length > 0){
-                    alert(authRes.errors[0].msg);
+                    //alert(authRes.errors[0].msg);
+                    props.showAlert(authRes.errors[0].msg, "danger")
                 }else if(authRes.error){
-                    alert(authRes.error);
+                    //alert(authRes.error);
+                    props.showAlert(authRes.error, "danger");
                 } else {
                     console.log("Some error occured.");
                 }   
