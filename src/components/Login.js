@@ -25,7 +25,7 @@ const Login = () => {
 
         if(authRes.success){
             //redirect
-            localStorage.setItem('token', authRes.token);
+            localStorage.setItem('token', authRes.authToken);
             history.push("/");
         } else{
             //alert - wrong creds
